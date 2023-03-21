@@ -38,14 +38,15 @@ for i in product_reviews_links:
         print(i)
         flipcart_html = page_parser(i)
         bigbox = flipcart_html.findAll("div" , {"class":"_2MImiq _1Qnn1K"})
-        print(bigbox[0].span.text)
+        split_ = bigbox[0].span.text.split(" ")[-1]
+        range_.append(split_)
     except:
+        range_.append("0")
         pass
+final_dict = {"product_links":product_links, "product_reviews_links":product_reviews_links, "range":range_}
 
 
 
-print(product_reviews_links)
-print("done")
 
 
 
