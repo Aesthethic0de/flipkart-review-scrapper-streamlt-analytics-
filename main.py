@@ -13,6 +13,8 @@ def create_review(request : product):
     review_scrapper(request.product_name)
     return {"data": "Review scrapped successfully"}
 
+#more endponits can be added here
+
 
 
 
