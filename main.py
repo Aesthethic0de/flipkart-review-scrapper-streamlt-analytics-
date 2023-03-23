@@ -5,6 +5,10 @@ from urllib.request import urlopen
 from utils.page import page_parser
 import logging
 
+
+
+
+
 flipkart_base = "https://www.flipkart.com"
 flipkart_url = "https://www.flipkart.com/search?q=" + "redmi"
 
@@ -43,8 +47,32 @@ for i in product_reviews_links:
     except:
         range_.append("0")
         pass
-final_dict = {"product_links":product_links, "product_reviews_links":product_reviews_links, "range":range_}
 
+product_dict = {}
+final_dict = {"product_links":product_links, "product_reviews_links":product_reviews_links, "range":range_}
+all_reviews_page_links = []
+for i in product_reviews_links:
+    try:
+        for j in range(1, int(final_dict["range"][product_reviews_links.index(i)])+1):
+            print(i + "&page=" + str(j))
+            all_reviews_page_links.append(i + "&page=" + str(j))
+        for k in all_reviews_page_links:
+            flipcart_html = page_parser(k)
+            bigbox = flipcart_html.findAll("div" , {"class":"_27M-vq _2hwual"})
+            for i in range(len(bigbox)):
+                comment = flipcart_html.findAll("div" , {"class":"t-ZTKy"})
+                name = bigbox[i].div.div.p.text
+                comment = comment[i].text[0:-9]
+                #remove READ MORE from comment if present
+                product_dict[name] = comment
+                print(name, comment)
+    except:
+        pass
+
+    all_reviews_page_links = []
+
+
+print(all_reviews_page_links)
 
 
 
